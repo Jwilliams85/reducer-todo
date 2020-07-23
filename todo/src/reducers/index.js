@@ -1,47 +1,68 @@
-// pure functions :
-//    * functions that return the same values for
-//      the same inputs.
-//    * does not cause side effects.
+export const initialList = {
 
-// reducer :
-//    * pure function
-//    * takes in two parameter, returns one
-//    * useReducer reducer
-//       * the first parameter is a state object
-//       * the second parameter is an action object
+ todo : [
+    {
+        chore: 'Learn about reducers',
+        id: 1,
+        completed: false
+      },
+      {
+        chore: 'Practice reducers',
+        id: 2,
+        finised: false
+      },
+      {
+        chore: 'Complete reducer project',
+        id: 3,
+        finised: false
+      },
+      {
+        chore: 'Practice more reducers',
+        id: 4,
+        finised: false
+      },
+      {
+        chore: 'Become proficient at reducers',
+        id: 5,
+        finised: false
+      }
+  ]
+}
+export const reducer = (state, action) => {
+    switch (action.type) {
+        case 'ADD _TASK':
+            console.log("action.payload", action)
+            return {
+                ...state, 
+                todo: [...state.todo,
+                {
+                    chore: action.payload,
+                    id:Date.now(),
+                    completed: false
+                }]
+            }
+            case 'CLEAR_ALL':
+                return{
+                    ...state, 
+                    todo: state.todo.filter(item => !item.completed)
+                }
+            case 'TOGGLE_IT':
+                return{
+                    ...state,
+                    todo:state.todo.map(item => {
+                        if(action.payload === item.id){
+                            return{
+                                ...item, 
+                                completed: !item.completed
+                            }
+                        }
+                        return{
+                            ...item
+                        }
+                    })
+                }
 
-// action :
-//    * object that has:
-//        * a required 'type' key
-//        * an optional 'payload' key
-export const TOGGLE_EDITING = "TOGGLE_EDITING";
-
-export const initialTitleState = {
-  title: "Todo List",
-  editing: false
-};
-
-export const titleReducer = (state, action) => {
-  // if (action.type === "TOGGLE_EDITING") {
-  //   return {
-  //     ...state,
-  //     editing: !state.editing
-  //   };
-  // }
-  // return state;
-  switch (action.type) {
-    case TOGGLE_EDITING:
-      return {
-        ...state,
-        editing: !state.editing
-      };
-    case "SET_TITLE":
-      return {
-        ...state,
-        title: action.payload,
-        editing: false
-      };
-    default:
-      return state;
-  }
-};
+                default:
+                    return state;
+    }
+}

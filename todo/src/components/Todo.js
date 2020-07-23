@@ -1,58 +1,18 @@
-import React, { useState, useReducer } from "react";
+import React from 'react'
 
-import {
-  titleReducer,
-  initialTitleState,
-  TOGGLE_EDITING
-} from "../reducers/index";
+// import './Todo.css'
 
-const Title = () => {
-  // const [title, setTitle] = useState("Hello earthlings!");
-  // const [editing, setEditing] = useState(false);
-  const [newTitleText, setNewTitleText] = useState("");
-  const [state, dispatch] = useReducer(titleReducer, initialTitleState);
+const Todo = props => {
+    console.log("item",props)
+    return (
+        <div 
+        className={
+            `item${props.item.finished ? 'finished' : ''}`}
+            onClick={()=> props.toggleItem(props.item.id)}
+            >
+            <p>{props.item.chore}</p>
+        </div>
+    )
+}
 
-  const handleChanges = e => {
-    setNewTitleText(e.target.value);
-  };
-
-  // breakout:
-  //   * implement a SET_TITLE action that sets the title.
-  //   * the action for SET_TITLE will use the 'payload' key for the new title
-  //   * in your reducer, act on SET_TITLE and update the state appropriately
-
-  return (
-    <div>
-      {!state.editing ? (
-        <h1>
-          {state.title}{" "}
-          <i
-            onClick={() => dispatch({ type: TOGGLE_EDITING })}
-            className="far fa-edit"
-          />
-        </h1>
-      ) : (
-        <div>
-          <input
-            className="title-input"
-            type="text"
-            name="newTitleText"
-            value={newTitleText}
-            onChange={handleChanges}
-          />
-          <button
-            onClick={() => {
-              // setTitle(newTitleText);
-              // setEditing(false);
-              dispatch({ type: "SET_TITLE", payload: newTitleText });
-            }}
-          >
-            Update title
-          </button>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Title;
+export default Todo
