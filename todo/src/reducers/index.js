@@ -17,7 +17,7 @@
 export const TOGGLE_EDITING = "TOGGLE_EDITING";
 
 export const initialTitleState = {
-  title: "title from reducer",
+  title: "Todo List",
   editing: false
 };
 
